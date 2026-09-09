@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dylan Waldner</title>
+<meta name="description" content="Personal site of Dylan Waldner.">
+
+<!-- Social preview (shows up when the link is shared) -->
+<meta property="og:title" content="Dylan Waldner">
+<meta property="og:description" content="Personal site of Dylan Waldner.">
+<meta property="og:image" content="headshot.png">
+<meta property="og:type" content="website">
+
+<style>
+  :root {
+    --bg: #fbfbf9;
+    --fg: #1a1a18;
+    --muted: #6b6b66;
+    --rule: #e2e2dc;
+    --accent: #1a1a18;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #131312;
+      --fg: #ececea;
+      --muted: #9a9a94;
+      --rule: #2c2c2a;
+      --accent: #ececea;
+    }
+  }
+
+  * { box-sizing: border-box; }
+
+  html { -webkit-text-size-adjust: 100%; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font: 17px/1.6 ui-sans-serif, -apple-system, "Segoe UI", Inter, Helvetica, Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    padding: 10vh 24px 12vh;
+  }
+
+  main { width: 100%; max-width: 34rem; }
+
+  .headshot {
+    width: 108px;
+    height: 108px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center 22%;
+    display: block;
+    margin-bottom: 28px;
+    filter: grayscale(100%);
+  }
+
+  h1 {
+    font-size: 1.9rem;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    margin: 0 0 6px;
+    font-weight: 600;
+  }
+
+  .tagline {
+    color: var(--muted);
+    margin: 0 0 32px;
+    font-size: 1.05rem;
+  }
+
+  p { margin: 0 0 18px; }
+
+  h2 {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    color: var(--muted);
+    font-weight: 600;
+    margin: 42px 0 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  ul { list-style: none; margin: 0; padding: 0; }
+
+  li { margin-bottom: 10px; }
+
+  a { color: var(--accent); text-decoration-color: var(--rule); text-underline-offset: 3px; }
+  a:hover { text-decoration-color: currentColor; }
+
+  .links a { margin-right: 18px; display: inline-block; }
+
+  footer {
+    margin-top: 56px;
+    padding-top: 18px;
+    border-top: 1px solid var(--rule);
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+</style>
+</head>
+<body>
+<main>
+
+  <img class="headshot" src="headshot.png" alt="Dylan Waldner">
+
+  <h1>Dylan Waldner</h1>
+  <!-- TODO: replace with your actual role / one-liner -->
+  <p class="tagline">Machine learning engineer.</p>
+
+  <!-- TODO: two or three sentences about what you work on and what you care about -->
+  <p>
+    I build and study machine learning systems. This is where I keep my
+    writing, projects, and whatever else is worth pointing at.
+  </p>
+
+  <h2>Elsewhere</h2>
+  <!-- TODO: fill in your real handles, delete any you don't want -->
+  <p class="links">
+    <a href="https://github.com/dylanwaldner">GitHub</a>
+    <a href="https://www.linkedin.com/in/dylanwaldner">LinkedIn</a>
+    <a href="mailto:you@example.com">Email</a>
+  </p>
+
+  <h2>Projects</h2>
+  <!-- TODO: swap in real projects, or delete this whole section for now -->
+  <ul>
+    <li><a href="#">Project name</a> — one line on what it does.</li>
+    <li><a href="#">Project name</a> — one line on what it does.</li>
+  </ul>
+
+  <footer>
+    © <span id="year">2026</span> Dylan Waldner
+  </footer>
+
+</main>
+
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>

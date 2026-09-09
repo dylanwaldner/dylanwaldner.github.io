@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Dylan Waldner</title>
-<meta name="description" content="Personal site of Dylan Waldner.">
+<meta name="description" content="Dylan Waldner is a researcher in AI safety, alignment, and ethics.">
 
 <!-- Social preview (shows up when the link is shared) -->
 <meta property="og:title" content="Dylan Waldner">
-<meta property="og:description" content="Personal site of Dylan Waldner.">
+<meta property="og:description" content="Dylan Waldner is a researcher in AI safety, alignment, and ethics.">
 <meta property="og:image" content="headshot.png">
 <meta property="og:type" content="website">
 
@@ -87,7 +87,14 @@
 
   ul { list-style: none; margin: 0; padding: 0; }
 
-  li { margin-bottom: 10px; }
+  li { margin-bottom: 14px; }
+
+  .meta {
+    display: block;
+    color: var(--muted);
+    font-size: 0.87rem;
+    margin-top: 2px;
+  }
 
   a { color: var(--accent); text-decoration-color: var(--rule); text-underline-offset: 3px; }
   a:hover { text-decoration-color: currentColor; }
@@ -109,13 +116,12 @@
   <img class="headshot" src="headshot.png" alt="Dylan Waldner">
 
   <h1>Dylan Waldner</h1>
-  <!-- TODO: replace with your actual role / one-liner -->
-  <p class="tagline">Machine learning engineer.</p>
+  <p class="tagline">AI safety, alignment, and ethics researcher.</p>
 
-  <!-- TODO: two or three sentences about what you work on and what you care about -->
   <p>
-    I build and study machine learning systems. This is where I keep my
-    writing, projects, and whatever else is worth pointing at.
+    I'm interested in alignment at the population level, studied through
+    evolutionary framings. I build tools intended to govern populations of AIs
+    all at once.
   </p>
 
   <h2>Elsewhere</h2>
@@ -123,14 +129,23 @@
   <p class="links">
     <a href="https://github.com/dylanwaldner">GitHub</a>
     <a href="https://www.linkedin.com/in/dylanwaldner">LinkedIn</a>
-    <a href="mailto:you@example.com">Email</a>
+    <a id="email" href="#">Email</a>
   </p>
 
-  <h2>Projects</h2>
-  <!-- TODO: swap in real projects, or delete this whole section for now -->
+  <h2>Papers</h2>
   <ul>
-    <li><a href="#">Project name</a> — one line on what it does.</li>
-    <li><a href="#">Project name</a> — one line on what it does.</li>
+    <li>
+      <a href="https://arxiv.org/abs/2509.24065">AI Safety, Alignment, and Ethics (AI SAE)</a>
+      <span class="meta">2025</span>
+    </li>
+    <li>
+      <a href="https://arxiv.org/abs/2603.16916">Noncooperative Human-AI Agent Dynamics</a>
+      <span class="meta">2026 · with V. Kungurtsev, M. Ashimosi</span>
+    </li>
+    <li>
+      <a href="https://arxiv.org/abs/2502.05442">The Odyssey of the Fittest: Can Agents Survive and Still Be Good?</a>
+      <span class="meta">2025 · with R. Miikkulainen</span>
+    </li>
   </ul>
 
   <footer>
@@ -139,6 +154,17 @@
 
 </main>
 
-<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Assembled at runtime so the full address never appears in the page source
+  // for regex-based harvesters to find.
+  (function () {
+    var user = 'h' + 'i';
+    var host = ['dylanwaldner', 'com'].join('.');
+    var a = document.getElementById('email');
+    a.href = 'mail' + 'to:' + user + '@' + host;
+  })();
+</script>
 </body>
 </html>

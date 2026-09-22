@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Dylan Waldner</title>
 <meta name="description" content="Dylan Waldner is a researcher in AI safety, alignment, and ethics.">
+<meta name="theme-color" content="#8B2FE8">
 
 <!-- Social preview (shows up when the link is shared) -->
 <meta property="og:title" content="Dylan Waldner">
@@ -14,21 +15,13 @@
 
 <style>
   :root {
-    --bg: #fbfbf9;
-    --fg: #1a1a18;
-    --muted: #6b6b66;
-    --rule: #e2e2dc;
-    --accent: #1a1a18;
-  }
+    --purple:  #A855F7;
+    --orange:  #FF7A45;
+    --turq:    #2DD4BF;
 
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #131312;
-      --fg: #ececea;
-      --muted: #9a9a94;
-      --rule: #2c2c2a;
-      --accent: #ececea;
-    }
+    --text:       #ffffff;
+    --text-muted: rgba(255, 255, 255, 0.78);
+    --rule:       rgba(255, 255, 255, 0.28);
   }
 
   * { box-sizing: border-box; }
@@ -37,39 +30,161 @@
 
   body {
     margin: 0;
-    background: var(--bg);
-    color: var(--fg);
-    font: 17px/1.6 ui-sans-serif, -apple-system, "Segoe UI", Inter, Helvetica, Arial, sans-serif;
+    min-height: 100vh;
+    color: var(--text);
+    font: 17px/1.65 ui-sans-serif, -apple-system, "Segoe UI", Inter, Helvetica, Arial, sans-serif;
     display: flex;
     justify-content: center;
-    padding: 10vh 24px 12vh;
+    padding: 8vh 22px 12vh;
+
+    /* Purple -> red-orange -> turquoise, running top-left to bottom-right */
+    background:
+      linear-gradient(135deg,
+        #7B2FF7   0%,
+        #9B27E0  14%,
+        #C026A8  30%,
+        #FF5A2B  48%,
+        #FF8C42  58%,
+        #45C9B0  80%,
+        #17D4C2  90%,
+        #0EA5B5 100%);
+    background-attachment: fixed;
   }
 
-  main { width: 100%; max-width: 34rem; }
+  /* ---- decorative layer: shine, streaks, bubbles ---- */
+
+  .bg {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* broad glossy highlight sweeping across the top-left */
+  .bg::before {
+    content: "";
+    position: absolute;
+    inset: -20%;
+    background:
+      radial-gradient(55% 45% at 18% 12%, rgba(255,255,255,0.40), transparent 65%),
+      radial-gradient(40% 35% at 88% 92%, rgba(255,255,255,0.22), transparent 70%);
+  }
+
+  /* faint sheen band right where the colours hand off to each other */
+  .bg::after {
+    content: "";
+    position: absolute;
+    inset: -30%;
+    background: linear-gradient(135deg,
+      transparent 38%,
+      rgba(255,255,255,0.22) 47%,
+      transparent 54%,
+      transparent 72%,
+      rgba(255,255,255,0.18) 80%,
+      transparent 87%);
+    filter: blur(26px);
+  }
+
+  .streak {
+    position: absolute;
+    height: 5px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.95), transparent);
+    filter: blur(6px);
+    opacity: 0.75;
+    transform: rotate(-38deg);
+  }
+
+  /* clustered around the purple->orange and orange->turquoise transitions */
+  .s1 { width: 46vw; top: 26%; left: -4%;  }
+  .s2 { width: 30vw; top: 35%; left: 16%; height: 3px; opacity: 0.6; }
+  .s3 { width: 52vw; top: 44%; left: 30%; }
+  .s4 { width: 26vw; top: 58%; left: 8%;  height: 3px; opacity: 0.5; }
+  .s5 { width: 40vw; top: 70%; left: 44%; }
+  .s6 { width: 22vw; top: 80%; left: 22%; height: 3px; opacity: 0.55; }
+
+  .bubble {
+    position: absolute;
+    border-radius: 50%;
+    background:
+      radial-gradient(circle at 32% 28%,
+        rgba(255,255,255,0.95) 0%,
+        rgba(255,255,255,0.42) 26%,
+        rgba(255,255,255,0.10) 52%,
+        rgba(255,255,255,0.03) 70%,
+        transparent 76%);
+    box-shadow:
+      inset 0 0 22px rgba(255,255,255,0.45),
+      inset -6px -8px 18px rgba(255,255,255,0.18),
+      0 10px 34px rgba(0,0,0,0.10);
+    animation: float 14s ease-in-out infinite alternate;
+  }
+
+  .b1  { width: 180px; height: 180px; top:  8%; left: 62%; animation-duration: 17s; }
+  .b2  { width:  96px; height:  96px; top: 30%; left: 12%; animation-duration: 13s; animation-delay: -3s; }
+  .b3  { width: 240px; height: 240px; top: 41%; left: 74%; animation-duration: 21s; animation-delay: -7s; }
+  .b4  { width:  62px; height:  62px; top: 52%; left: 33%; animation-duration: 11s; animation-delay: -2s; }
+  .b5  { width: 130px; height: 130px; top: 63%; left:  5%; animation-duration: 19s; animation-delay: -9s; }
+  .b6  { width:  44px; height:  44px; top: 22%; left: 46%; animation-duration:  9s; animation-delay: -1s; }
+  .b7  { width: 158px; height: 158px; top: 78%; left: 56%; animation-duration: 16s; animation-delay: -5s; }
+  .b8  { width:  74px; height:  74px; top: 88%; left: 28%; animation-duration: 12s; animation-delay: -6s; }
+  .b9  { width:  36px; height:  36px; top: 47%; left: 55%; animation-duration: 10s; animation-delay: -4s; }
+  .b10 { width: 110px; height: 110px; top: 14%; left: 30%; animation-duration: 18s; animation-delay: -8s; }
+
+  @keyframes float {
+    from { transform: translate3d(0, 0, 0)        scale(1);    }
+    to   { transform: translate3d(14px, -26px, 0) scale(1.06); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .bubble { animation: none; }
+  }
+
+  /* ---- content ---- */
+
+  main {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 36rem;
+    padding: 44px 40px 38px;
+    border-radius: 28px;
+    background: rgba(255, 255, 255, 0.13);
+    border: 1px solid rgba(255, 255, 255, 0.30);
+    backdrop-filter: blur(22px) saturate(150%);
+    -webkit-backdrop-filter: blur(22px) saturate(150%);
+    box-shadow:
+      0 24px 70px rgba(0, 0, 0, 0.22),
+      inset 0 1px 0 rgba(255, 255, 255, 0.45);
+  }
 
   .headshot {
-    width: 108px;
-    height: 108px;
+    width: 176px;
+    height: 176px;
     border-radius: 50%;
     object-fit: cover;
     object-position: center 22%;
     display: block;
-    margin-bottom: 28px;
-    filter: grayscale(100%);
+    margin-bottom: 26px;
+    filter: grayscale(100%) contrast(1.05);
+    border: 3px solid rgba(255, 255, 255, 0.55);
+    box-shadow: 0 14px 40px rgba(0, 0, 0, 0.28);
   }
 
   h1 {
-    font-size: 1.9rem;
-    line-height: 1.2;
-    letter-spacing: -0.02em;
+    font-size: 2.3rem;
+    line-height: 1.15;
+    letter-spacing: -0.025em;
     margin: 0 0 6px;
-    font-weight: 600;
+    font-weight: 700;
+    text-shadow: 0 2px 18px rgba(0, 0, 0, 0.22);
   }
 
   .tagline {
-    color: var(--muted);
-    margin: 0 0 32px;
-    font-size: 1.05rem;
+    color: var(--text-muted);
+    margin: 0 0 22px;
+    font-size: 1.06rem;
   }
 
   p { margin: 0 0 18px; }
@@ -77,40 +192,112 @@
   h2 {
     font-size: 0.78rem;
     text-transform: uppercase;
-    letter-spacing: 0.09em;
-    color: var(--muted);
-    font-weight: 600;
-    margin: 42px 0 14px;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    font-weight: 700;
+    margin: 38px 0 14px;
     padding-bottom: 10px;
     border-bottom: 1px solid var(--rule);
   }
 
   ul { list-style: none; margin: 0; padding: 0; }
 
-  li { margin-bottom: 14px; }
+  li { margin-bottom: 15px; }
 
   .meta {
     display: block;
-    color: var(--muted);
+    color: var(--text-muted);
     font-size: 0.87rem;
     margin-top: 2px;
   }
 
-  a { color: var(--accent); text-decoration-color: var(--rule); text-underline-offset: 3px; }
+  a { color: var(--text); text-decoration-color: var(--rule); text-underline-offset: 3px; }
   a:hover { text-decoration-color: currentColor; }
 
-  .links a { margin-right: 18px; display: inline-block; }
+  /* ---- icon row, directly under the name ---- */
+
+  .links {
+    display: flex;
+    gap: 14px;
+    margin: 0 0 6px;
+    flex-wrap: wrap;
+  }
+
+  .icon {
+    width: 48px;
+    height: 48px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.16);
+    border: 1px solid rgba(255, 255, 255, 0.34);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    text-decoration: none;
+    transition:
+      transform   0.28s cubic-bezier(0.22, 0.9, 0.3, 1.3),
+      background  0.28s ease,
+      border      0.28s ease,
+      box-shadow  0.28s ease;
+  }
+
+  .icon svg {
+    width: 21px;
+    height: 21px;
+    fill: #fff;
+    transition: fill 0.28s ease;
+  }
+
+  .icon:hover,
+  .icon:focus-visible {
+    transform: scale(1.28) translateY(-3px);
+    outline: none;
+  }
+
+  .icon-github:hover,  .icon-github:focus-visible  { background: var(--purple); border-color: var(--purple); box-shadow: 0 0 26px var(--purple); }
+  .icon-scholar:hover, .icon-scholar:focus-visible { background: var(--orange); border-color: var(--orange); box-shadow: 0 0 26px var(--orange); }
+  .icon-linkedin:hover,.icon-linkedin:focus-visible{ background: var(--turq);   border-color: var(--turq);   box-shadow: 0 0 26px var(--turq); }
+  .icon-email:hover,   .icon-email:focus-visible   { background: var(--purple); border-color: var(--purple); box-shadow: 0 0 26px var(--purple); }
 
   footer {
-    margin-top: 56px;
+    margin-top: 44px;
     padding-top: 18px;
     border-top: 1px solid var(--rule);
-    color: var(--muted);
+    color: var(--text-muted);
     font-size: 0.85rem;
+  }
+
+  @media (max-width: 540px) {
+    body { padding: 5vh 16px 10vh; }
+    main { padding: 32px 24px 30px; border-radius: 22px; }
+    .headshot { width: 138px; height: 138px; }
+    h1 { font-size: 1.95rem; }
+    .icon { width: 44px; height: 44px; }
   }
 </style>
 </head>
 <body>
+
+<div class="bg" aria-hidden="true">
+  <span class="streak s1"></span>
+  <span class="streak s2"></span>
+  <span class="streak s3"></span>
+  <span class="streak s4"></span>
+  <span class="streak s5"></span>
+  <span class="streak s6"></span>
+
+  <span class="bubble b1"></span>
+  <span class="bubble b2"></span>
+  <span class="bubble b3"></span>
+  <span class="bubble b4"></span>
+  <span class="bubble b5"></span>
+  <span class="bubble b6"></span>
+  <span class="bubble b7"></span>
+  <span class="bubble b8"></span>
+  <span class="bubble b9"></span>
+  <span class="bubble b10"></span>
+</div>
+
 <main>
 
   <img class="headshot" src="headshot.png" alt="Dylan Waldner">
@@ -118,6 +305,25 @@
   <h1>Dylan Waldner</h1>
   <p class="tagline">AI safety, alignment, and ethics researcher.</p>
 
+  <nav class="links" aria-label="Elsewhere">
+    <a class="icon icon-github" href="https://github.com/dylanwaldner" target="_blank" rel="noopener noreferrer" aria-label="GitHub" title="GitHub">
+      <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+    </a>
+
+    <a class="icon icon-linkedin" href="https://www.linkedin.com/in/dylanwaldner" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" title="LinkedIn">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/></svg>
+    </a>
+
+    <a class="icon icon-scholar" href="https://scholar.google.com/citations?hl=en&amp;user=KkdVaigAAAAJ&amp;view_op=list_works&amp;sortby=pubdate" target="_blank" rel="noopener noreferrer" aria-label="Google Scholar" title="Google Scholar">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.242 13.769L0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z"/></svg>
+    </a>
+
+    <a class="icon icon-email" id="email" href="#" aria-label="Email" title="Email">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg>
+    </a>
+  </nav>
+
+  <h2>About</h2>
   <p>
     I'm interested in alignment at the population level, studied through
     evolutionary framings. I build tools intended to govern populations of AIs
@@ -135,15 +341,6 @@
     shapes populations of agents through shared norms.
   </p>
 
-  <h2>Elsewhere</h2>
-  <!-- TODO: fill in your real handles, delete any you don't want -->
-  <p class="links">
-    <a href="https://github.com/dylanwaldner" target="_blank" rel="noopener noreferrer">GitHub</a>
-    <a href="https://www.linkedin.com/in/dylanwaldner" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-    <a href="https://scholar.google.com/citations?hl=en&amp;user=KkdVaigAAAAJ&amp;view_op=list_works&amp;sortby=pubdate" target="_blank" rel="noopener noreferrer">Google Scholar</a>
-    <a id="email" href="#">Email</a>
-  </p>
-
   <h2>Papers</h2>
   <ul>
     <li>
@@ -156,16 +353,16 @@
     </li>
     <li>
       <a href="https://arxiv.org/abs/2603.16916" target="_blank" rel="noopener noreferrer">Noncooperative Human-AI Agent Dynamics</a>
-      <span class="meta">2026 · with V. Kungurtsev, M. Ashimosi</span>
+      <span class="meta">2026 &middot; with V. Kungurtsev, M. Ashimosi</span>
     </li>
     <li>
       <a href="https://arxiv.org/abs/2502.05442" target="_blank" rel="noopener noreferrer">The Odyssey of the Fittest: Can Agents Survive and Still Be Good?</a>
-      <span class="meta">2025 · with R. Miikkulainen</span>
+      <span class="meta">2025 &middot; with R. Miikkulainen</span>
     </li>
   </ul>
 
   <footer>
-    © <span id="year">2026</span> Dylan Waldner
+    &copy; <span id="year">2026</span> Dylan Waldner
   </footer>
 
 </main>

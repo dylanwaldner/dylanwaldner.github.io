@@ -4,34 +4,222 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Law as Constraints · Dylan Waldner</title>
-<meta name="description" content="Law as Constraints, a forthcoming paper by Dylan Waldner.">
+<meta name="description" content="Law as Constraints: one defeasible deontic theory governing both a learned world-model planner and a model predictive controller for robot manipulation. A forthcoming paper by Dylan Waldner.">
 <meta name="theme-color" content="#000000">
+
+<meta property="og:title" content="Law as Constraints">
+<meta property="og:description" content="A forthcoming paper by Dylan Waldner on enforcing context-dependent duties in both robot planning and control.">
+<meta property="og:type" content="article">
+
 <style>
+  :root {
+    --bg:         #000000;
+    --surface:    #0b0d10;
+    --text:       #f2f5f7;
+    --text-muted: #9aa4ad;
+    --rule:       #1f262d;
+    --blue:       #7dd3fc;
+    --blue-dim:   rgba(125, 211, 252, 0.14);
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+
   body {
     margin: 0;
     min-height: 100vh;
-    display: grid;
-    place-items: center;
-    padding: 24px 16px;
-    box-sizing: border-box;
-    background: #000;
-    color: #f2f5f7;
+    display: flex;
+    flex-direction: column;
+    background: var(--bg);
+    color: var(--text);
     font: 17px/1.65 ui-sans-serif, -apple-system, "Segoe UI", Inter, Helvetica, Arial, sans-serif;
-    text-align: center;
   }
-  .label { color: #7dd3fc; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
-  h1 { font-size: clamp(2.2rem, 6vw, 4rem); letter-spacing: -0.03em; line-height: 1.1; margin: 10px 0 12px; }
-  p { color: #9aa4ad; margin: 0 0 28px; }
-  a { color: #7dd3fc; text-decoration: none; border: 1px solid #7dd3fc; border-radius: 999px; padding: 10px 20px; font-weight: 600; }
-  a:hover { background: #7dd3fc; color: #000; }
+
+  a { color: var(--blue); text-decoration: none; }
+  a:hover, a:focus-visible { text-decoration: underline; text-underline-offset: 3px; }
+
+  /* ---- top bar (matches the main site) ---- */
+
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 0 clamp(16px, 5vw, 64px);
+    height: 64px;
+  }
+
+  .brand { color: var(--text); font-weight: 700; letter-spacing: -0.01em; white-space: nowrap; }
+  .brand:hover { text-decoration: none; color: var(--blue); }
+
+  .tabs { display: flex; gap: 4px; }
+  .tabs a {
+    color: var(--text-muted);
+    padding: 8px 14px;
+    border-radius: 999px;
+    font-size: 0.95rem;
+    transition: color 0.2s ease, background 0.2s ease;
+  }
+  .tabs a:hover { color: var(--text); text-decoration: none; }
+  .tabs a.current { color: var(--blue); background: var(--blue-dim); }
+
+  /* ---- paper ---- */
+
+  main {
+    flex: 1;
+    width: 100%;
+    padding: clamp(40px, 8vh, 96px) clamp(16px, 5vw, 64px);
+  }
+
+  .wrap { max-width: 48rem; margin: 0 auto; }
+
+  .label {
+    color: var(--blue);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin: 0 0 14px;
+  }
+
+  h1 {
+    font-size: clamp(2.4rem, 6vw, 4.2rem);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin: 0 0 16px;
+  }
+
+  .authors { color: var(--text-muted); font-size: 1.1rem; margin: 0 0 28px; }
+  .authors b { color: var(--text); font-weight: 600; }
+
+  .actions { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 48px; }
+
+  .btn {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 999px;
+    border: 1px solid var(--blue);
+    color: var(--blue);
+    font-size: 0.95rem;
+    font-weight: 600;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+  .btn:hover, .btn:focus-visible { background: var(--blue); color: #000; text-decoration: none; }
+
+  /* Shown until the PDF exists: looks like a button but does nothing. */
+  .btn.disabled {
+    border-color: var(--rule);
+    color: var(--text-muted);
+    cursor: default;
+  }
+  .btn.disabled:hover { background: transparent; color: var(--text-muted); }
+
+  h2 {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--blue);
+    font-weight: 700;
+    margin: 0 0 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .abstract { font-size: 1.08rem; margin: 0 0 40px; }
+
+  .keywords { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+  .keywords li {
+    font-size: 0.88rem;
+    color: var(--text);
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    padding: 4px 12px;
+  }
+
+  footer {
+    padding: 20px clamp(16px, 5vw, 64px);
+    border-top: 1px solid var(--rule);
+    color: var(--text-muted);
+    font-size: 0.85rem;
+  }
+
+  @media (max-width: 440px) {
+    .brand { font-size: 0.95rem; }
+    .tabs a { padding: 6px 9px; font-size: 0.88rem; }
+  }
 </style>
 </head>
 <body>
-  <main>
-    <div class="label">Forthcoming</div>
+
+<header>
+  <div class="bar">
+    <a class="brand" href="/#home">Dylan Waldner</a>
+    <nav class="tabs" aria-label="Sections">
+      <a href="/#home">Home</a>
+      <a href="/#about">About</a>
+      <a href="/#publications" class="current">Publications</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <article class="wrap">
+    <p class="label">Forthcoming</p>
     <h1>Law as Constraints</h1>
-    <p>Dylan Waldner &middot; Paper coming soon.</p>
-    <a href="/#publications">&larr; Back to publications</a>
-  </main>
+    <p class="authors"><b>Dylan Waldner</b></p>
+
+    <div class="actions">
+      <!-- When the paper is ready: put the PDF in this folder and replace this
+           span with  <a class="btn" href="law_as_constraints.pdf">PDF</a>  -->
+      <span class="btn disabled" aria-disabled="true">PDF coming soon</span>
+      <a class="btn" href="/#publications">&larr; All publications</a>
+    </div>
+
+    <h2>Abstract</h2>
+    <p class="abstract">
+      A robot may receive a useful task whose execution is restricted by
+      context-dependent duties and exceptions. We develop a two-rate
+      architecture that uses one defeasible deontic theory for action selection
+      in a learned world-model planner and for geometric and kinematic
+      constraints in a nonlinear model predictive controller. The planner
+      predicts candidate stroke outcomes from visual latents. During execution,
+      the controller re-grounds the theory from exact live observations. It
+      returns observed outcomes and rule-relevant facts to reconcile the
+      planner&rsquo;s state before the next search. A simulated Franka arm that
+      must inspect and route a package provides a test case. The controller
+      translates a prohibition on package contact with a delivery pad into a
+      heading-dependent half-space. We derive a conditional clearance result
+      for a locked-yaw package and specify paired tests of planner enforcement,
+      controller enforcement, and the state feedback between them. A common
+      audit scores realized events and duties. Historical pilot summaries
+      motivate the evaluation.
+    </p>
+
+    <h2>Index terms</h2>
+    <ul class="keywords">
+      <li>Defeasible deontic logic</li>
+      <li>Model predictive control</li>
+      <li>World models</li>
+      <li>Manipulation</li>
+      <li>Task and motion planning</li>
+    </ul>
+  </article>
+</main>
+
+<footer>
+  &copy; 2026 Dylan Waldner
+</footer>
+
 </body>
 </html>
